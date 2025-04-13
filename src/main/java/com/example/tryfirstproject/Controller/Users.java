@@ -11,6 +11,6 @@ public class Users {
     @GetMapping("/getUsers")
     public String getUsers(){
 
-        return "Ravi---------->Howard---------->wynand";
+        return "Ravi--------->Howard---------->wynand";
     }
 }
