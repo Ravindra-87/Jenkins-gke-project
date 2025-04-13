@@ -1,0 +1,15 @@
+steps:
+  #First Clone from github Repository
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone','https://github:com/Ravindra-87/Try-FirsT-Project:git:']
+
+  #Build the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build','-t','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project','.']
+
+  #Push the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
