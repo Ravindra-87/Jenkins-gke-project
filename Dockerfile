@@ -5,7 +5,9 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the jar file into the container
-COPY target/Try-First-Project-*.jar app.jar
+#COPY target/Try-First-Project-0.0.1-SNAPSHOT.jar app.jar
+
+COPY --from=build target/Try-First-Project-0.0.1-SNAPSHOT.jar app.war
 
 # Expose the port that app runs on
 EXPOSE 8080

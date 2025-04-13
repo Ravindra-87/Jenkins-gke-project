@@ -1,16 +1,16 @@
 steps:
   #First Clone from github Repository
-  - name: 'gcr.io/cloud-builders/git'
+  - name: 'clone the project'
     entrypoint: 'git'
     args: ['clone','https://github.com/Ravindra-87/Try-FirsT-Project.git']
 
 
     #Build the image
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: 'build the  docker image'
     args: ['build','-t','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project','.']
 
   #Push the image
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: 'push the docker image to GAR'
     args: ['push','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project']
 
 options:
