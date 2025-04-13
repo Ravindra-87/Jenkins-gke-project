@@ -1,7 +1,7 @@
 steps:
   #First Clone from github Repository
   - name: 'gcr.io/cloud-builders/git'
-    args: ['clone','https://github:com/Ravindra-87/Try-FirsT-Project:git:']
+    args: ['clone','https://github:com/Ravindra-87/Try-FirsT-Project:git']
 
   #Build the image
   - name: 'gcr.io/cloud-builders/docker'
