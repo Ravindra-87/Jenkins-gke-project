@@ -12,7 +12,7 @@ public class Users {
     @GetMapping("/getUsers")
     public String getUsers(){
 
-        return "Ravi----->Howard Roark------>wynand";
+        return "Ravi----->Howard Roark---->wynand";
     }
 
     @RequestMapping("/")
