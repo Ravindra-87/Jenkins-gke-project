@@ -16,7 +16,7 @@ spec:
         - name: try-first-project
           image: asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project
           ports:
-            - containerPort: 80
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -28,4 +28,4 @@ spec:
     app: try-first-project-app
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: 8080
