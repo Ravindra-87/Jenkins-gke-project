@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Styled Quote Page with Hover Dropdowns</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .background {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(-45deg, #ff6b6b, #f7d794, #1dd1a1, #54a0ff);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Header Section */
+    .header {
+      background-color: rgba(0, 0, 0, 0.8); /* Dark background for the header */
+      width: 100%;
+      padding: 10px 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-item {
+      margin: 0 20px;
+      position: relative;
+    }
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #333;
+      display: none;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      min-width: 180px;
+      z-index: 20;
+    }
+
+    /* Show dropdown on hover */
+    .nav-item:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown-item {
+      padding: 10px;
+      color: white;
+      text-decoration: none;
+      display: block;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #444;
+    }
+
+    /* Styling folders (hover effect) */
+    .folder-item {
+      background-color: #555;
+      padding: 8px 12px;
+      font-size: 1.2rem;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .folder-item:hover {
+      background-color: #666;
+    }
+
+    /* Quote Container */
+    .quote-container {
+      position: relative;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.7); /* Transparent black background */
+      border-radius: 25px;
+      max-width: 80%; /* Adjust width here */
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+
+    /* First line background */
+    .quote-line-1 {
+      font-size: 2.5rem;
+      color: white;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      font-weight: bold;
+      line-height: 1.6;
+      background-color: rgba(0, 0, 0, 0.7); /* Dark background for first line */
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    /* Second line background */
+    .quote-line-2 {
+      font-size: 2.5rem;
+      color: white;
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      font-weight: bold;
+      line-height: 1.6;
+      background-color: salmon; /* Light red background for second line */
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 15px; /* Add spacing between lines */
+    }
+
+  </style>
+</head>
+<body>
+<!-- Header Section with Dropdowns -->
+<div class="header">
+  <div class="nav-container">
+    <div class="nav-item">
+      <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">Home</a>
+    </div>
+    <div class="nav-item">
+      <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">About</a>
+    </div>
+    <div class="nav-item">
+      <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">Services</a>
+      <!-- Dropdown under 'Services' -->
+      <div class="dropdown">
+        <a href="#" class="dropdown-item">Web Design</a>
+        <a href="#" class="dropdown-item">App Development</a>
+        <a href="#" class="dropdown-item">SEO Optimization</a>
+        <div class="dropdown-item">
+          <!-- Folder item styled like a folder -->
+          <div class="folder-item">More Services</div>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item">Custom Solutions</a>
+            <a href="#" class="dropdown-item">Consulting</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="#" style="color: white; font-size: 1.5rem; text-decoration: none;">Contact</a>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content Section -->
+<div class="background">
+  <div class="quote-container">
+    <div class="quote-line-1">
+      The question isn't who is going to let me
+    </div>
+    <div class="quote-line-2">
+      it's who is going to stop me.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
