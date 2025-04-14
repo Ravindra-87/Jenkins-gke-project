@@ -28,7 +28,7 @@ steps:
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
       - run
-      - --filename=kubernetes-resource-file
+      - --filename=kubernetes/Deployment.yaml
       - --image=gcr.io/asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest
       - --location=us-central1
       - --cluster=dev-cluster
