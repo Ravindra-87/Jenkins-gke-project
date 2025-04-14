@@ -15,7 +15,6 @@ spec:
       containers:
         - name: try-first-project
           image: asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project
-
           ports:
             - containerPort: 80
 ---
