@@ -23,7 +23,7 @@ kind: Service
 metadata:
   name: try-first-project-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: try-first-project-app
   ports:
