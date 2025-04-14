@@ -1,25 +1,26 @@
 steps:
   #First Clone from github Repository
   - name: 'gcr.io/cloud-builders/git'
+    id: 'Clone the project from git hub'
     entrypoint: 'git'
     args: ['clone','https://github.com/Ravindra-87/Try-FirsT-Project.git']
 
   #Maven Build
-  - name: 'gcr.io/cloud-builders/maven'
+  - name: 'gcr.io/cloud-builders/mvn'
     id: 'Build with Maven'
     args:
       - 'clean'
       - 'install'
-      - '-DskipTests'  # Skip tests if you don't need them for the build
+      - '-DskipTests'
     dir: '.'  # Assuming the pom.xml file is in the root of your repo
 
     #Build the image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build','-t','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project','.']
+    args: ['build','-t','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project:latest','.']
 
-  #Push the image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project']
+#  #Push the image
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: ['push','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project']
 
 options:
   logging: CLOUD_LOGGING_ONLY
