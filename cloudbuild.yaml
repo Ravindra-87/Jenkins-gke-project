@@ -7,7 +7,7 @@ steps:
 
   #Maven Build
   - name: 'gcr.io/cloud-builders/mvn'
-    id: 'Build with Maven'
+    id: 'Build the maven artifact'
     args:
       - 'clean'
       - 'install'
@@ -16,6 +16,7 @@ steps:
 
     #Build the image
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build the docker image'
     args: ['build','-t','asia-south1-docker.pkg.dev/spring-melody-456515-j0/try-first-project-artifact-repo/try-first-project:latest','.']
 
 #  #Push the image
