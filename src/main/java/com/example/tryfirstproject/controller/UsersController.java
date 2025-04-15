@@ -6,8 +6,12 @@ import com.example.tryfirstproject.model.Users;
 import com.example.tryfirstproject.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -19,16 +23,32 @@ public class UsersController {
 
 
     @GetMapping("/getUsers")
-    public String getUsers(){
+    public ModelAndView getUsers(Model model) {
 
-        return "Ravi---->Howard Roark----->wynand";
+        List<UsersEntity> userList = userService.getAllUsers();
+
+        userList.stream().forEach(usersEntity -> System.out.print(usersEntity.getUser_id()+" ,"));
+
+        List<Users> usersList=userList.stream().map(usersEntity -> {
+            Users user = new Users();
+            user.setName(usersEntity.getUsername());
+            user.setEmail(usersEntity.getUseremail());
+            return user;
+             }).collect(Collectors.toList());
+
+        // Return a ModelAndView with the Thymeleaf template and the users list
+        ModelAndView modelAndView = new ModelAndView("all-users");  // This will resolve to 'all-users.html'
+        modelAndView.addObject("usersList", usersList);  // Add user list to the model for rendering
+
+
+        return modelAndView; // Return the Thymeleaf template "members.html"
     }
+
 
     @PostMapping("/saveUser")
     public Users saveUser(@RequestBody Users user) {
 
         log.info("user data--> "+user.toString());
-        userService.saveUser(user);
         return userService.saveUser(user);
     }
 

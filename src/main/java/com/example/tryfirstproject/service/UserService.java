@@ -33,7 +33,10 @@ public class UserService {
     }
 
     // Method to get all users
-    public List<Users> getAllUsers() {
-        return userList;
+    public List<UsersEntity> getAllUsers() {
+
+        List<UsersEntity>  usersEntityList=usersRepository.findAll();
+
+        return usersEntityList;
     }
 }
