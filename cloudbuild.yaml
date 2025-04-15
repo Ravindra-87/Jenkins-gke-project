@@ -34,6 +34,3 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY
-# Use substitutions for custom variable _SHA
-substitutions:
-  _SHA: $(git rev-parse --short HEAD)
