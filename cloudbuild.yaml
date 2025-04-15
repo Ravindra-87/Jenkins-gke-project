@@ -31,7 +31,7 @@ steps:
       - --filename=kubernetes/deployment.yaml
       - --location=us-central1
       - --cluster=dev-cluster
-      - --image=gcr.io/asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest
+      - --image=asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest
 
 options:
   logging: CLOUD_LOGGING_ONLY
