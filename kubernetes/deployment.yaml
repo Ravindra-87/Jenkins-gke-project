@@ -41,7 +41,7 @@ spec:
           command:
             - "/cloud_sql_proxy"
             - "-dir=/cloudsql"  # Directory where proxy will place the Unix socket
-            - "-instances=try-first-project-456718:asia-south1:asia-south1-c=tcp:3306"  # Your Cloud SQL instance connection
+            - "-instances=try-first-project-456718:asia-south1:try-first-project-db-dev=tcp:3306"  # Your Cloud SQL instance connection
           securityContext:
             runAsNonRoot: true  # Ensure the container runs as a non-root user
           ports:
