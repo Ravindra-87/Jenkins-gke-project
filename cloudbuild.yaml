@@ -17,7 +17,7 @@ steps:
     #Build the image
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build the docker image'
-    args: ['build','-t','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest','.']
+    args: ['build','-t','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:$(date +%Y:%m:%d:%H:%M:%S)','.']
 
   #Push the image
   - name: 'gcr.io/cloud-builders/docker'
