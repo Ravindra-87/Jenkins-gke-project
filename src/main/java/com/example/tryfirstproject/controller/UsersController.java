@@ -32,10 +32,5 @@ public class UsersController {
         return userService.saveUser(user);
     }
 
-    @RequestMapping("/")
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index.html");
-        return modelAndView;
-    }
+
 }
