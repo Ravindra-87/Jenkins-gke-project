@@ -17,12 +17,12 @@ steps:
     #Build the image
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build the docker image'
-    args: ['build','-t','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:$SHORT_SHA','.']
+    args: ['build','-t','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest','.']
 
   #Push the image
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Push the docker image'
-    args: ['push','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:$SHORT_SHA']
+    args: ['push','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest']
 
     # deploy container image to GKE
   - name: "gcr.io/cloud-builders/gke-deploy"
@@ -34,3 +34,6 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY
+# Use substitutions for custom variable _SHA
+substitutions:
+  _SHA: $(git rev-parse --short HEAD)
