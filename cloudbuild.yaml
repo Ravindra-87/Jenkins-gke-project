@@ -14,29 +14,10 @@ steps:
       - '-DskipTests'
     dir: '.'  # Assuming the pom.xml file is in the root of your repo
 
-  # Generate the timestamp and save it to a file
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: 'Generate timestamp'
-    entrypoint: 'bash'
-    script: |
-      TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
-      echo "Generated timestamp: $TIMESTAMP"
-      echo "$TIMESTAMP" > /workspace/timestamp.txt
-
-  #Build the image
-#  - name: 'gcr.io/cloud-builders/docker'
-#    id: 'Build the docker image'
-#    args: ['build','-t','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:$(date +%Y-%m-%d-%H-%M-%S)','.']
-
+    #Build the image
   - name: 'gcr.io/cloud-builders/docker'
-    id: 'Build the docker image with timestamp'
-    entrypoint: 'bash'
-    args:
-      - -c
-      - |
-        TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
-        docker build -t asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:$TIMESTAMP .
-
+    id: 'Build the docker image'
+    args: ['build','-t','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest','.']
 
   #Push the image
   - name: 'gcr.io/cloud-builders/docker'
