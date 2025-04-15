@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: try-first-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: try-first-project-app
+  template:
+    metadata:
+      labels:
+        app: try-first-project-app
+    spec:
+      # Use the Kubernetes Service Account (KSA) with Workload Identity
+      serviceAccountName: cloudsql-ksa  # Ensure this matches your KSA name
+      containers:
+        # Spring Boot application container
+        - name: try-first-project
+          image: asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "127.0.0.1"  # Cloud SQL Proxy will listen on localhost
+            - name: DB_PORT
+              value: "3306"  # MySQL default port
+            - name: DB_NAME
+              value: "try-first-project-db"  # Your database name in Cloud SQL
+            - name: DB_USER
+              value: "ravi"  # Your database user in Cloud SQL
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-password  # Secret name that stores the DB password
+                  key: password
+
+        # Cloud SQL Auth Proxy container
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.33.7  # Cloud SQL Proxy image
+          command:
+            - "/cloud_sql_proxy"
+            - "-dir=/cloudsql"  # Directory where proxy will place the Unix socket
+            - "-instances=try-first-project-456718:asia-south1:asia-south1-c=tcp:3306"  # Your Cloud SQL instance connection
+          securityContext:
+            runAsNonRoot: true  # Ensure the container runs as a non-root user
+          ports:
+            - containerPort: 3306  # Cloud SQL Proxy listens on this port
+---
