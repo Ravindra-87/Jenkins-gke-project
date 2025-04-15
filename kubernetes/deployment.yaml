@@ -12,7 +12,7 @@ spec:
       labels:
         app: try-first-project-app
     spec:
-      # Use the Kubernetes Service Account (KSA) with Workload Identity
+      # Use the Kubernetes Service Account (KSA)with Workload Identity
       serviceAccountName: cloudsql-ksa  # Ensure this matches your KSA name
       containers:
         # Spring Boot application container
