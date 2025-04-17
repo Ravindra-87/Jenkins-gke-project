@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: try-first-project
-  namespace: dev-first-project-456718
+  namespace: dev
 spec:
   replicas: 1
   selector:
