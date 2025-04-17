@@ -37,7 +37,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                  name: db-password
-                 key: secret-db-password
+                 key: db-password-key
 
         # Cloud SQL Auth Proxy container
         - name: cloudsql-proxy
