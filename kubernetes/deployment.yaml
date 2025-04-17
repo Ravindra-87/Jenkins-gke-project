@@ -27,22 +27,24 @@ spec:
               value: "127.0.0.1"  # Cloud SQL Proxy will listen on localhost
             - name: DB_PORT
               value: "3306"  # MySQL default port
+            - name: INSTANCE_CONNECTION_NAME
+              value: try-first-project-456718:asia-south1:try-first-project-db-dev
             - name: DB_NAME
-              value: "try-first-project-db"  # Your database name in Cloud SQL
+              value: "try-first-project-db" # Your database name in Cloud SQL
             - name: DB_USER
               value: "ravi"  # Your database user in Cloud SQL
             - name: DB_PASSWORD
               value: "Aynrand#87"
 
-        # Cloud SQL Auth Proxy container
-        - name: cloudsql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.33.7  # Cloud SQL Proxy image
-          command:
-            - "/cloud_sql_proxy"
-            - "-dir=/cloudsql"  # Directory where proxy will place the Unix socket
-            - "-instances=try-first-project-456718:asia-south1:try-first-project-db-dev=tcp:3306"  # Your Cloud SQL instance connection
-          securityContext:
-            runAsNonRoot: true  # Ensure the container runs as a non-root user
-          ports:
-            - containerPort: 3306  # Cloud SQL Proxy listens on this port
+#        # Cloud SQL Auth Proxy container
+#        - name: cloudsql-proxy
+#          image: gcr.io/cloudsql-docker/gce-proxy:1.33.7  # Cloud SQL Proxy image
+#          command:
+#            - "/cloud_sql_proxy"
+#            - "-dir=/cloudsql"  # Directory where proxy will place the Unix socket
+#            - "-instances=try-first-project-456718:asia-south1:try-first-project-db-dev=tcp:3306"  # Your Cloud SQL instance connection
+#          securityContext:
+#            runAsNonRoot: true  # Ensure the container runs as a non-root user
+#          ports:
+#            - containerPort: 3306  # Cloud SQL Proxy listens on this port
 ---

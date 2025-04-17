@@ -1,5 +1,5 @@
 steps:
-  #First Clone from github Repository
+  #First Clone from GitHub Repository
   - name: 'gcr.io/cloud-builders/git'
     id: 'Clone the project from git hub'
     entrypoint: 'git'
