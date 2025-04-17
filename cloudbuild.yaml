@@ -24,14 +24,22 @@ steps:
     id: 'Push the docker image'
     args: ['push','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-docker-repo/try-first-project:latest']
 
-    # deploy container image to GKE
-  - name: "gcr.io/cloud-builders/gke-deploy"
-    args:
-      - run
-      - --filename=kubernetes/deployment.yaml
-      - --location=us-central1
-      - --cluster=dev-cluster
-      - --image=asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-docker-repo/try-first-project:latest
+#    # deploy container image to GKE
+#  - name: "gcr.io/cloud-builders/gke-deploy"
+#    args:
+#      - run
+#      - --filename=kubernetes/deployment.yaml
+#      - --location=us-central1
+#      - --cluster=dev-cluster
+#      - --image=asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-docker-repo/try-first-project:latest
+
+  # Deploy changes to kubernetes config files - Stage 3
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: 'deploy container image to GKE'
+    args: ["apply", "-f", "kubernetes/"]
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=dev-cluster'
 
 options:
   logging: CLOUD_LOGGING_ONLY
