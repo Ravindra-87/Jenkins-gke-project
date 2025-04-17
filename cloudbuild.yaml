@@ -24,14 +24,14 @@ steps:
     id: 'Push the docker image'
     args: ['push','asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-docker-repo/try-first-project:latest']
 
-#    # deploy container image to GKE
-#  - name: "gcr.io/cloud-builders/gke-deploy"
-#    args:
-#      - run
-#      - --filename=kubernetes/deployment.yaml
-#      - --location=us-central1
-#      - --cluster=dev-cluster
-#      - --image=asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest
+    # deploy container image to GKE
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+      - run
+      - --filename=kubernetes/deployment.yaml
+      - --location=us-central1
+      - --cluster=dev-cluster
+      - --image=asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-docker-repo/try-first-project:latest
 
 options:
   logging: CLOUD_LOGGING_ONLY

@@ -13,11 +13,11 @@ spec:
         app: try-first-project-app
     spec:
       # Use the Kubernetes Service Account (KSA)with Workload Identity
-      serviceAccountName: cloudsql-ksa  # Ensure this matches your KSA name
+      serviceAccountName: ksa-pod-access  # Ensure this matches your KSA name
       containers:
         # Spring Boot application container
         - name: try-first-project
-          image: asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-gar-rep/try-first-project:latest
+          image: asia-east1-docker.pkg.dev/try-first-project-456718/try-first-project-docker-repo/try-first-project:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
