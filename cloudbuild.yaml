@@ -38,7 +38,7 @@ steps:
     id: 'deploy container image to GKE'
     args: ["apply", "-f", "kubernetes/"]
     env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+      - 'CLOUDSDK_COMPUTE_ZONE=africa-south1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=dev-cluster'
 
 options:
