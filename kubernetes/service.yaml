@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: try-first-project-service
+  namespace: dev-first-project-456718
 spec:
   type: NodePort
   selector:
