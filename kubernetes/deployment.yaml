@@ -34,7 +34,10 @@ spec:
             - name: DB_USER
               value: "ravi"  # Your database user in Cloud SQL
             - name: DB_PASSWORD
-              value: "Aynrand#87"
+              valueFrom:
+                secretKeyRef:
+                 name: db-password
+                 key: secret-db-password
 
         # Cloud SQL Auth Proxy container
         - name: cloudsql-proxy

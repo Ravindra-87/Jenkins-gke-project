@@ -4,10 +4,11 @@ metadata:
   name: try-first-project-service
   namespace: dev
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: try-first-project-app
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
+      nodePort: 30080
