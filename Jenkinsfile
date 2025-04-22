@@ -33,7 +33,7 @@ pipeline {
          stage('Build and Push Docker Image') {
                     steps {
                         script {
-                            def dockerImageTag = $IMAGE_NAME:$IMAGE_TAG // or your desired tag
+                            def dockerImageTag = $IMAGE_NAME:latest // or your desired tag
                             docker.build(dockerImageTag, "-f Dockerfile .")
                             docker.withRegistry('https://asia-east1-docker.pkg.dev', 'github-access-id') {
                                 docker.image(dockerImageTag).push()
