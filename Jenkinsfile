@@ -1,6 +1,14 @@
 pipeline {
     agent any  // This specifies the pipeline can run on any available agent
 
+     environment {
+            GOOGLE_CREDENTIALS = credentials('gs-account-id') // Jenkins credentials for the service account JSON key
+            PROJECT_ID = 'jenkins-tf-pro-2025'
+            IMAGE_NAME = "asia-east1-docker.pkg.dev/jenkins-tf-pro-2025/my-docker-repo/try-first-project" // Update with your Artifact Registry path
+            IMAGE_TAG = "latest" // Tag for the image, you can use branch name or commit hash if needed
+        }
+
+
     stages {
         stage('Checkout') {
             steps {
@@ -9,7 +17,6 @@ pipeline {
                 git  branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Try-FirsT-Project.git'
             }
         }
-
         stage('Build') {
             steps {
                 // Example build steps (could be Maven, Gradle, etc.)
@@ -22,6 +29,23 @@ pipeline {
                 '''
             }
         }
+          stage('Authenticate with GCP') {
+                            steps {
+                                sh '''
+                                    echo "GOOGLE_CREDENTIALS" > gcloud-key.json
+                                    gcloud auth activate-service-account --key-file=gcloud-key.json
+                                    gcloud config set project $PROJECT_ID
+                                '''
+                            }
+                        }
+          stage('Build Docker Image') {
+                     steps {
+                         sh '''
+                             docker build -t $IMAGE_NAME:$IMAGE_TAG .
+                         '''
+                     }
+                 }
+
     }
 
     post {
