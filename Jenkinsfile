@@ -6,7 +6,7 @@ pipeline {
             steps {
                 // Pull the code from GitHub
                 echo 'Cloning the repository...'
-                git  branch: 'main' credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Try-FirsT-Project.git'
+                git  branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Try-FirsT-Project.git'
             }
         }
 
