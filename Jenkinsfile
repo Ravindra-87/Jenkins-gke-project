@@ -8,7 +8,6 @@ pipeline {
             IMAGE_TAG = "latest" // Tag for the image, you can use branch name or commit hash if needed
         }
 
-
     stages {
         stage('Checkout') {
             steps {
