@@ -29,23 +29,18 @@ pipeline {
                 '''
             }
         }
-          stage('Authenticate with GCP') {
-                            steps {
-                                sh '''
-                                    echo "GOOGLE_CREDENTIALS" > gcloud-key.json
-                                    gcloud auth activate-service-account --key-file=gcloud-key.json
-                                    gcloud config set project $PROJECT_ID
-                                '''
+
+         stage('Build and Push Docker Image') {
+                    steps {
+                        script {
+                            def dockerImageTag = $IMAGE_NAME:$IMAGE_TAG // or your desired tag
+                            docker.build(dockerImageTag, "-f Dockerfile .")
+                            docker.withRegistry('https://asia-east1-docker.pkg.dev', 'github-access-id') {
+                                docker.image(dockerImageTag).push()
                             }
                         }
-          stage('Build Docker Image') {
-                     steps {
-                         sh '''
-                             docker build -t $IMAGE_NAME:$IMAGE_TAG .
-                         '''
-                     }
-                 }
-
+                    }
+                }
     }
 
     post {
