@@ -21,7 +21,6 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
-
 //        stage('Build Docker Image') {
 //            steps {
 //                script {
