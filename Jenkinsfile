@@ -4,7 +4,7 @@ pipeline {
     environment {
         GOOGLE_CREDENTIALS = credentials('jenkins-gsa-id')   // Credential ID for the Google Service Account
         GITHUB_CREDENTIALS = credentials('github-access-id') // Credential ID for GitHub token
-        GITHUB_URL='https://github.com/your-org/your-repo.git'
+        GITHUB_URL='https://github.com/Ravindra-87/Jenkins-gke-project.git'
     }
 
     stages {
