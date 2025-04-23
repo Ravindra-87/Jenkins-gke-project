@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven-3.9.9' // Use the exact version form tool configuration
+    }
 
     environment {
         GOOGLE_CREDENTIALS = credentials('gcp-service-account')   // Credential ID for the Google Service Account
