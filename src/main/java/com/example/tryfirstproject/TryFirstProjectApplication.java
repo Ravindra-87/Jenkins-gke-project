@@ -13,5 +13,4 @@ public class TryFirstProjectApplication {
     public static void main(String[] args) {
         SpringApplication.run(TryFirstProjectApplication.class, args);
     }
-
 }
