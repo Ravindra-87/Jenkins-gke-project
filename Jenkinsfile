@@ -1,59 +1,50 @@
 pipeline {
-    agent any  // This specifies the pipeline can run on any available agent
+    agent any
 
-     environment {
-            GOOGLE_CREDENTIALS = credentials('gs-account-id') // Jenkins credentials for the service account JSON key
-            PROJECT_ID = 'jenkins-tf-pro-2025'
-            IMAGE_NAME = "asia-east1-docker.pkg.dev/jenkins-tf-pro-2025/my-docker-repo/try-first-project" // Update with your Artifact Registry path
-            IMAGE_TAG = "latest" // Tag for the image, you can use branch name or commit hash if needed
-        }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                // Pull the code from GitHub
-                echo 'Cloning the repository...'
-                git  branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Try-FirsT-Project.git'
-            }
-        }
-        stage('Build') {
-            steps {
-                // Example build steps (could be Maven, Gradle, etc.)
-                echo 'Building the project...'
-
-                // Assuming it's a Maven project
-                sh '''
-                    echo "Building with Maven..."
-                    mvn clean install -DskipTests=true
-                '''
-            }
-        }
-
-         stage('Build and Push Docker Image') {
-                    steps {
-                        script {
-                            def dockerImageTag = "${IMAGE_NAME}:latest" // or your desired tag
-                            docker.build(dockerImageTag, "-f Dockerfile .")
-                            docker.withRegistry('https://asia-east1-docker.pkg.dev', 'github-access-id') {
-                                docker.image(dockerImageTag).push()
-                            }
-                        }
-                    }
-                }
+    environment {
+        GOOGLE_CREDENTIALS = credentials('google-cloud-jenkins')  // Credential ID for the Google Service Account
+        GITHUB_CREDENTIALS = credentials('github-token')         // Credential ID for GitHub token
     }
 
-    post {
-        success {
-            // This block will run if the build succeeds
-            echo 'Build and deploy successful! The application is now deployed.'
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git credentialsId: 'github-token', url: 'https://github.com/your-org/your-repo.git'
+            }
         }
-        failure {
-            // This block will run if the build fails
-            echo 'Build or deployment failed. Please check the logs.'
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image using Dockerfile in the repository
+                    sh 'docker build -t gcr.io/your-project-id/your-image:latest .'
+                }
+            }
         }
-        always {
-            // This block will always run after the pipeline finishes
-            echo 'Pipeline execution complete.'
+
+        stage('Push to Artifact Registry') {
+            steps {
+                script {
+                    // Log in to Artifact Registry (using the Google Cloud credentials)
+                    sh 'gcloud auth activate-service-account --key-file=${GOOGLE_CREDENTIALS}'
+                    sh 'gcloud auth configure-docker gcr.io --quiet'
+
+                    // Push the Docker image to Artifact Registry
+                    sh 'docker push gcr.io/your-project-id/your-image:latest'
+                }
+            }
+        }
+
+        stage('Deploy to GKE') {
+            steps {
+                script {
+                    // Set the Kubernetes credentials
+                    sh 'gcloud container clusters get-credentials your-cluster --zone your-zone --project your-project-id'
+
+                    // Deploy the Docker image to GKE (adjust kubectl and deployment YAML as needed)
+                    sh 'kubectl set image deployment/your-deployment your-container=gcr.io/your-project-id/your-image:latest'
+                }
+            }
         }
     }
 }

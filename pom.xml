@@ -14,7 +14,7 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>Try-First-Project</artifactId>
+    <artifactId>gke</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Try-First-Project</name>
     <description>Try-First-Project</description>
