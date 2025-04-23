@@ -4,12 +4,13 @@ pipeline {
     environment {
         GOOGLE_CREDENTIALS = credentials('jenkins-gsa-id')   // Credential ID for the Google Service Account
         GITHUB_CREDENTIALS = credentials('github-access-id') // Credential ID for GitHub token
+        GITHUB_URL='https://github.com/your-org/your-repo.git'
     }
 
     stages {
         stage('Clone Repository.........') {
             steps {
-                git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/your-org/your-repo.git'
+                git branch: 'main', credentialsId: ${GITHUB_CREDENTIALS}, url: ${GITHUB_URL}
             }
         }
 
