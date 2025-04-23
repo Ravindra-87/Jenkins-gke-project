@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GOOGLE_CREDENTIALS = credentials('jenkins-gsa-id')   // Credential ID for the Google Service Account
+        GOOGLE_CREDENTIALS = credentials('gcp-service-account')   // Credential ID for the Google Service Account
         GITHUB_CREDENTIALS = credentials('github-access-id') // Credential ID for GitHub token
     }
 
@@ -10,6 +10,12 @@ pipeline {
         stage('Clone Repository.........') {
             steps {
                 git branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Jenkins-gke-project.git'
+            }
+        }
+
+        stage('Build with Maven........') {
+            steps {
+                sh 'mvn clean install'
             }
         }
 
