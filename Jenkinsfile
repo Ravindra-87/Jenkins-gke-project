@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        skipDefaultCheckout()
+    }
     tools {
         maven 'maven-3.9.9' // Use the exact version form tool configuration
     }

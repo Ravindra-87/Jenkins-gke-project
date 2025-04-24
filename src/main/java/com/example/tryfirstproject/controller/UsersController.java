@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class UsersController {
 
     // Define the logger instance
-    private static final Logger log = LoggerFactory.getLogger(UsersController.class);
+    //private static final Logger log = LoggerFactory.getLogger(UsersController.class);
 
 
 
@@ -53,7 +53,7 @@ public class UsersController {
     @PostMapping("/saveUser")
     public Users saveUser(@RequestBody Users user) {
 
-        log.info("user data--> "+user.toString());
+        //log.info("user data--> "+user.toString());
         return userService.saveUser(user);
     }
 
