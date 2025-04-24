@@ -39,19 +39,19 @@ pipeline {
                 }
             }
         }
-//
-//        stage('Push to Artifact Registry') {
-//            steps {
-//                script {
-//                    // Log in to Artifact Registry (using the Google Cloud credentials)
-//                    sh 'gcloud auth activate-service-account --key-file=${GOOGLE_CREDENTIALS}'
-//                    sh 'gcloud auth configure-docker gcr.io --quiet'
-//
-//                    // Push the Docker image to Artifact Registry
-//                    sh 'docker push gcr.io/your-project-id/your-image:latest'
-//                }
-//            }
-//        }
+
+        stage('Push to Artifact Registry') {
+            steps {
+                script {
+                    // Log in to Artifact Registry (using the Google Cloud credentials)
+                    sh 'gcloud auth activate-service-account --key-file=${GOOGLE_CREDENTIALS}'
+                    sh 'gcloud auth configure-docker gcr.io --quiet'
+
+                    // Push the Docker image to Artifact Registry
+                    sh 'docker push asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
+                }
+            }
+        }
 //
 //        stage('Deploy to GKE') {
 //            steps {
