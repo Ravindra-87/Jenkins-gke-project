@@ -14,7 +14,7 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>gke</artifactId>
+    <artifactId>jenkins-gke</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Jenkins-gke-project</name>
     <description>Try-First-Project</description>
