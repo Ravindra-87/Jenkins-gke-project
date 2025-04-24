@@ -24,6 +24,16 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
+        stage('Check Docker') {
+            steps {
+                sh '''
+                    echo "Checking Docker..."
+                    export PATH="/opt/homebrew/bin:$PATH"
+                    which docker
+                    docker --version
+                '''
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {

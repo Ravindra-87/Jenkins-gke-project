@@ -16,7 +16,7 @@
     <groupId>com.example</groupId>
     <artifactId>gke</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Try-First-Project</name>
+    <name>Jenkins-gke-project</name>
     <description>Try-First-Project</description>
 
     <properties>
