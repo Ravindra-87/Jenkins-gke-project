@@ -24,14 +24,14 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
-//        stage('Build Docker Image') {
-//            steps {
-//                script {
-//                    // Build Docker image using Dockerfile in the repository
-//                    sh 'docker build -t gcr.io/your-project-id/your-image:latest .'
-//                }
-//            }
-//        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image using Dockerfile in the repository
+                    sh 'docker build -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .'
+                }
+            }
+        }
 //
 //        stage('Push to Artifact Registry') {
 //            steps {
