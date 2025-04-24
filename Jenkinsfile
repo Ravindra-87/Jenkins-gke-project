@@ -33,7 +33,7 @@ pipeline {
                         mkdir -p $DOCKER_CONFIG
                         echo '{}' > $DOCKER_CONFIG/config.json
                         
-                        // Build Docker image using Dockerfile in the repository
+                        #Build Docker image using Dockerfile in the repository
                         docker build -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .
                      '''
                 }
