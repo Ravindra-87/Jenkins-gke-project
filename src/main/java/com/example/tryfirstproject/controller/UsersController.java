@@ -3,7 +3,6 @@ package com.example.tryfirstproject.controller;
 import com.example.tryfirstproject.entity.UsersEntity;
 import com.example.tryfirstproject.model.Users;
 import com.example.tryfirstproject.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
-@Slf4j
 @RestController
 public class UsersController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
 
     @Autowired
     UserService userService;
@@ -47,7 +49,7 @@ public class UsersController {
     @PostMapping("/saveUser")
     public Users saveUser(@RequestBody Users user) {
 
-        log.info("user data--> "+user.toString());
+        logger.info("user data--> "+user.toString());
         return userService.saveUser(user);
     }
 
