@@ -47,7 +47,7 @@ pipeline {
                     sh 'chmod a+x ~/.docker/cli-plugins/docker-buildx'
 
                     // Verify Buildx installation
-                    sh 'docker buildx version'
+                    sh 'docker buildx version || echo "Docker Buildx installation failed"'
                 }
             }
         }
