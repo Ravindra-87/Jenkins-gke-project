@@ -43,7 +43,7 @@ pipeline {
                         echo '{}' > $DOCKER_CONFIG/config.json
                         
                         #Build Docker image using Dockerfile in the repository
-                        docker build -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .
+                        docker buildx build --platform linux/amd64,linux/arm64  -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .              
                      '''
                 }
             }
@@ -57,7 +57,8 @@ pipeline {
                     sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
 
                     // Push the Docker image to Artifact Registry
-                    sh 'docker push asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
+                    sh 'docker push --platform linux/amd64,linux/arm64  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
+
                 }
             }
         }
