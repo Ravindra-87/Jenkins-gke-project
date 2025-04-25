@@ -38,6 +38,7 @@ pipeline {
             steps {
                 script {
                     sh '''
+                        export DOCKER_CLI_EXPERIMENTAL=enabled
                         export DOCKER_CONFIG=/tmp/docker-empty-config
                         mkdir -p $DOCKER_CONFIG
                         echo '{}' > $DOCKER_CONFIG/config.json
@@ -57,7 +58,7 @@ pipeline {
                     sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
 
                     // Push the Docker image to Artifact Registry
-                    sh 'docker push --platform linux/amd64,linux/arm64  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
+                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
 
                 }
             }
