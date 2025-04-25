@@ -34,6 +34,14 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
+        stage('Set up Docker Buildx') {
+            steps {
+                script {
+                    // Create Docker Buildx builder if not already created
+                    sh 'docker buildx create --use'
+                }
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -45,8 +53,7 @@ pipeline {
                         echo '{}' > $DOCKER_CONFIG/config.json
                         
                         #Build Docker image using Dockerfile in the repository    
-                        export DOCKER_CLI_EXPERIMENTAL=enabled
-                        docker buildx create --use       
+                        export DOCKER_CLI_EXPERIMENTAL=enabled                      
                         docker buildx build --platform linux/amd64,linux/arm64  -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .              
                      '''
                 }
