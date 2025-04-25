@@ -34,15 +34,20 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
-        stage('Set up Docker Buildx') {
+        stage('Install Docker Buildx') {
             steps {
                 script {
-                    // Create Docker Buildx builder if not already created
-                    sh '''
-                           docker buildx create --use
-                           echo  "Buildx version:======>" 
-                           docker buildx version
-                     '''
+                    // Create the directory for Docker CLI plugins
+                    sh 'mkdir -vp ~/.docker/cli-plugins/'
+
+                    // Download Buildx binary
+                    sh 'curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx'
+
+                    // Make the binary executable
+                    sh 'chmod a+x ~/.docker/cli-plugins/docker-buildx'
+
+                    // Verify Buildx installation
+                    sh 'docker buildx version'
                 }
             }
         }
