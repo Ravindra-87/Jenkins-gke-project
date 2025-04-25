@@ -78,11 +78,11 @@ pipeline {
                 }
             }
         }
-
+    }
         post {
             always {
                 echo 'Pipeline finished. Check logs above for success or failure........'
             }
         }
     }
-}
+
