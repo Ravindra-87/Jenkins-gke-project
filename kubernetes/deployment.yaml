@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: try-first-project-app
+        app: jenkins-gke-project
     spec:
       # Use the Kubernetes Service Account (KSA)with Workload Identity
       serviceAccountName: ksa  # Ensure this matches your KSA name
