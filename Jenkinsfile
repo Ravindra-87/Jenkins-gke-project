@@ -38,7 +38,11 @@ pipeline {
             steps {
                 script {
                     // Create Docker Buildx builder if not already created
-                    sh 'docker buildx create --use'
+                    sh '''
+                           docker buildx create --use'
+                           echo  "Buildx version:======>" 
+                           docker buildx version
+                     '''
                 }
             }
         }
