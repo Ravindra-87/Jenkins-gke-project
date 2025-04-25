@@ -17,7 +17,7 @@ spec:
       serviceAccountName: ksa  # Ensure this matches your KSA name
       containers:
         # Spring Boot application container
-        - name: try-first-project
+        - name: jenkins-gke-project
           image: asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest
           imagePullPolicy: Always
           ports:
