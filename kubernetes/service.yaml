@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jenkins-gke-project-service
-  namespace: dev
+  namespace: pro-dev
 spec:
   type: NodePort
   selector:
