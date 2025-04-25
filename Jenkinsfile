@@ -10,6 +10,15 @@ pipeline {
     environment {
         GOOGLE_CREDENTIALS = credentials('gcp-service-account')   // Credential ID for the Google Service Account
         GITHUB_CREDENTIALS = credentials('github-access-id') // Credential ID for GitHub token
+        GOOGLE_PROJECT_ID = 'jenkins-gke-project-457719'
+        GOOGLE_CLUSTER_NAME = 'dev-cluster'
+        GOOGLE_CLUSTER_ZONE = 'us-central1-a'
+        IMAGE_NAME = 'jenkins-gke-project'
+        IMAGE_TAG = 'latest'
+        IMAGE_URL = 'asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/${IMAGE_NAME}:${IMAGE_TAG}'
+        GSA_EMAIL = 'jenkins-gsa@jenkins-gke-project-457719.iam.gserviceaccount.com'
+        KSA_NAME = 'ksa'
+        KSA_NAMESPACE = 'pro-dev'
     }
 
     stages {
@@ -53,22 +62,27 @@ pipeline {
             }
         }
 
-//
-//        stage('Deploy to GKE') {
-//            steps {
-//                script {
-//                    // Set the Kubernetes credentials
-//                    sh 'gcloud container clusters get-credentials your-cluster --zone your-zone --project your-project-id'
-//
-//                    // Deploy the Docker image to GKE (adjust kubectl and deployment YAML as needed)
-//                    sh 'kubectl set image deployment/your-deployment your-container=gcr.io/your-project-id/your-image:latest'
-//                }
-//            }
-//        }
-    }
-    post {
-        always {
-            echo 'Pipeline finished. Check logs above for success or failure........'
+        // Stage 4: Deploy to GKE using kubectl
+        stage('Deploy to GKE') {
+            steps {
+                script {
+                    // Ensure kubectl is configured to use the correct GKE context
+                    sh """
+                        kubectl config set-context --current --namespace=$KSA_NAMESPACE
+                    
+                      # Apply all Kubernetes files in the project root directory
+                        kubectl apply -f ./kubernetes/deployment.yaml
+                        kubectl apply -f ./kubernetes/service.yaml
+                        kubectl apply -f ./kubernetes/secret.yaml
+                    """
+                }
+            }
+        }
+
+        post {
+            always {
+                echo 'Pipeline finished. Check logs above for success or failure........'
+            }
         }
     }
 }
