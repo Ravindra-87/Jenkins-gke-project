@@ -40,24 +40,26 @@ pipeline {
             steps {
                    // Create and use a builder if not already
                     sh 'docker buildx create --name jenkinsbuilders --use || echo "Builder already exists"'
-                   // Build the image for amd64
-                    sh 'docker buildx build --platform linux/arm64,linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .'
-            }
-        }
-
-        stage('Push to Artifact Registry') {
-            steps {
-                script {
-                    // Log in to Artifact Registry (using the Google Cloud credentials)
                     sh 'gcloud auth activate-service-account --key-file=$GOOGLE_CREDENTIALS'
                     sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
+                   // Build the image for amd64
+                    sh 'docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest --push .'
 
-                    // Push the Docker image to Artifact Registry
-                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
-
-                }
             }
         }
+//
+//        stage('Push to Artifact Registry') {
+//            steps {
+//                script {
+//                    // Log in to Artifact Registry (using the Google Cloud credentials)
+//
+//
+//                    // Push the Docker image to Artifact Registry
+//                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
+//
+//                }
+//            }
+//        }
 
         // Stage 4: Deploy to GKE using kubectl
         stage('Deploy to GKE') {
