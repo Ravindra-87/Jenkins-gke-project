@@ -20,8 +20,8 @@ pipeline {
         KSA_NAME = 'ksa'
         KSA_NAMESPACE = 'pro-dev'
         DOCKER_DEFAULT_PLATFORM='linux/amd64'
-//        DOCKER_BUILDKIT = '1'
-//        DOCKER_CLI_EXPERIMENTAL = 'enabled'
+        DOCKER_BUILDKIT = '1'
+        DOCKER_CLI_EXPERIMENTAL = 'enabled'
     }
 
     stages {
@@ -47,7 +47,7 @@ pipeline {
                         echo '{}' > $DOCKER_CONFIG/config.json
                         
                         #Build Docker image using Dockerfile in the repository                 
-                        docker  build -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                                           
+                        docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                                           
 
                     '''
                 }
