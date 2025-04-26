@@ -19,8 +19,8 @@ pipeline {
         GSA_EMAIL = 'jenkins-gsa@jenkins-gke-project-457719.iam.gserviceaccount.com'
         KSA_NAME = 'ksa'
         KSA_NAMESPACE = 'pro-dev'
-        DOCKER_BUILDKIT = '1'
-        DOCKER_CLI_EXPERIMENTAL = 'enabled'
+//        DOCKER_BUILDKIT = '1'
+//        DOCKER_CLI_EXPERIMENTAL = 'enabled'
     }
 
     stages {
