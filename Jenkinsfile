@@ -47,21 +47,8 @@ pipeline {
 
             }
         }
-//
-//        stage('Push to Artifact Registry') {
-//            steps {
-//                script {
-//                    // Log in to Artifact Registry (using the Google Cloud credentials)
-//
-//
-//                    // Push the Docker image to Artifact Registry
-//                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
-//
-//                }
-//            }
-//        }
 
-        // Stage 4: Deploy to GKE using kubectl
+        //  Deploy to GKE using kubectl
         stage('Deploy to GKE') {
             steps {
                 script {
@@ -70,7 +57,7 @@ pipeline {
                         kubectl config set-context --current --namespace=$KSA_NAMESPACE
                     
                       # Apply all Kubernetes files in the project root directory
-                        kubectl apply -f ./kubernetes/deployment.yaml
+                        kubectl apply -f ./kubernetes/deployment.yaml --validate=false
                         kubectl apply -f ./kubernetes/service.yaml
                         kubectl apply -f ./kubernetes/secret.yaml
                     """
