@@ -35,6 +35,14 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
+        stage('Check Docker==>') {
+            steps {
+                script {
+                    // Check if docker is available
+                    sh 'which docker'
+                }
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
