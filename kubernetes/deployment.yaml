@@ -38,5 +38,4 @@ spec:
                 secretKeyRef:
                  name: secret-db-password
                  key: secret-db-password-key
-
 ---
