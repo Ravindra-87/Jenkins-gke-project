@@ -43,7 +43,7 @@ pipeline {
                     sh 'gcloud auth activate-service-account --key-file=$GOOGLE_CREDENTIALS'
                     sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
                    // Build the image for amd64
-                    sh 'docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest --push .'
+                    sh 'docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:${BUILD_NUMBER} --push .'
 
             }
         }
