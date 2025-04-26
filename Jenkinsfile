@@ -38,19 +38,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh '''
-                             
-                        export DOCKER_CONFIG=/tmp/docker-empty-config
-                        mkdir -p $DOCKER_CONFIG
-                        echo '{}' > $DOCKER_CONFIG/config.json
-                                                   
-                        docker buildx create --name jenkinsbuilderx --use || echo "Builder already exists"  
-                                                     
-                        docker buildx build --platform linux/amd64  -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .
-                    
-                    '''
-                }
+                   // Create and use a builder if not already
+                    sh 'docker buildx create --name jenkinsbuilders --use || echo "Builder already exists"'
+                   // Build the image for amd64
+                    sh 'docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .'
             }
         }
 
