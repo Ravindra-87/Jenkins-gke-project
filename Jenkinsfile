@@ -57,7 +57,7 @@ pipeline {
                         kubectl config set-context --current --namespace=$KSA_NAMESPACE
                     
                       # Apply all Kubernetes files in the project root directory
-                        kubectl apply -f ./kubernetes/deployment.yaml --validate=false
+                        kubectl apply -f ./kubernetes/deployment.yaml 
                         kubectl apply -f ./kubernetes/service.yaml
                         kubectl apply -f ./kubernetes/secret.yaml
                     """
