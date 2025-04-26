@@ -35,14 +35,6 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
-        stage('Set up Builder') {
-            steps {
-                script {
-                    // Set the existing builder as the active one
-                    sh 'docker buildx use mybuilder'
-                }
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
@@ -54,7 +46,7 @@ pipeline {
                         echo '{}' > $DOCKER_CONFIG/config.json
                         
                         #Build Docker image using Dockerfile in the repository                 
-                        docker buildx build --platform linux/amd64  -tag asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                                           
+                        docker  build -tag asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                                           
 
                     '''
                 }
