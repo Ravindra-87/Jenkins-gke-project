@@ -19,86 +19,87 @@ pipeline {
         GSA_EMAIL = 'jenkins-gsa@jenkins-gke-project-457719.iam.gserviceaccount.com'
         KSA_NAME = 'ksa'
         KSA_NAMESPACE = 'pro-dev'
-        DOCKER_DEFAULT_PLATFORM='linux/amd64'
         DOCKER_BUILDKIT = '1'
         DOCKER_CLI_EXPERIMENTAL = 'enabled'
     }
 
     stages {
-        stage('Check Docker Buildx===>') {
+        stage('Clone Repository.........') {
             steps {
-                sh 'docker buildx version'
-                sh 'docker buildx ls'
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                // Create and use a builder if not already
-                sh 'docker buildx create --name jenkinsbuilder --use || echo "Builder already exists"'
-                // Build the image for amd64
-                sh 'docker buildx build --platform linux/amd64 -t test:latest .'
+                git branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Jenkins-gke-project.git'
             }
         }
 
-//        stage('Clone Repository.........') {
-//            steps {
-//                git branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Jenkins-gke-project.git'
-//            }
-//        }
-//
-//        stage('Build with Maven.........') {
-//            steps {
-//                sh 'mvn clean install -DskipTests'
-//            }
-//        }
-//
+        stage('Build with Maven.........') {
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
+        }
+        stage('Set up Builder') {
+            steps {
+                script {
+                    // Set the existing builder as the active one
+                    sh 'docker buildx use mybuilder'
+                }
+            }
+        }
 //        stage('Build Docker Image') {
 //            steps {
-//                script {
-//                    sh '''
-//
-//                        export DOCKER_CONFIG=/tmp/docker-empty-config
-//                        mkdir -p $DOCKER_CONFIG
-//                        echo '{}' > $DOCKER_CONFIG/config.json
-//
-//                        #Build Docker image using Dockerfile in the repository
-//                        docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .
-//
-//                    '''
-//                }
+//                // Create and use a builder if not already
+//                sh 'docker buildx create --name jenkinsbuilder --use || echo "Builder already exists"'
+//                // Build the image for amd64
+//                sh 'docker buildx build --platform linux/amd64 -t test:latest .'
 //            }
 //        }
-//
-//        stage('Push to Artifact Registry') {
-//            steps {
-//                script {
-//                    // Log in to Artifact Registry (using the Google Cloud credentials)
-//                    sh 'gcloud auth activate-service-account --key-file=$GOOGLE_CREDENTIALS'
-//                    sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
-//
-//                    // Push the Docker image to Artifact Registry
-//                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
-//
-//                }
-//            }
-//        }
-//
-//        // Stage 4: Deploy to GKE using kubectl
-//        stage('Deploy to GKE') {
-//            steps {
-//                script {
-//                    // Ensure kubectl is configured to use the correct GKE context
-//                    sh """
-//                        kubectl config set-context --current --namespace=$KSA_NAMESPACE
-//
-//                      # Apply all Kubernetes files in the project root directory
-//                        kubectl apply -f ./kubernetes/deployment.yaml
-//                        kubectl apply -f ./kubernetes/service.yaml
-//                        kubectl apply -f ./kubernetes/secret.yaml
-//                    """
-//                }
-//            }
-//        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh '''
+                             
+                        export DOCKER_CONFIG=/tmp/docker-empty-config
+                        mkdir -p $DOCKER_CONFIG
+                        echo '{}' > $DOCKER_CONFIG/config.json
+                        
+                        #Build Docker image using Dockerfile in the repository  
+                        docker buildx use mybuilder               
+                        docker buildx build --platform linux/amd64  -tag asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                                           
+
+                    '''
+                }
+            }
+        }
+
+        stage('Push to Artifact Registry') {
+            steps {
+                script {
+                    // Log in to Artifact Registry (using the Google Cloud credentials)
+                    sh 'gcloud auth activate-service-account --key-file=$GOOGLE_CREDENTIALS'
+                    sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
+
+                    // Push the Docker image to Artifact Registry
+                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
+
+                }
+            }
+        }
+
+        // Stage 4: Deploy to GKE using kubectl
+        stage('Deploy to GKE') {
+            steps {
+                script {
+                    // Ensure kubectl is configured to use the correct GKE context
+                    sh """
+                        kubectl config set-context --current --namespace=$KSA_NAMESPACE
+                    
+                      # Apply all Kubernetes files in the project root directory
+                        kubectl apply -f ./kubernetes/deployment.yaml
+                        kubectl apply -f ./kubernetes/service.yaml
+                        kubectl apply -f ./kubernetes/secret.yaml
+                    """
+                }
+            }
+        }
     }
         post {
             always {
