@@ -19,7 +19,7 @@ pipeline {
         GSA_EMAIL = 'jenkins-gsa@jenkins-gke-project-457719.iam.gserviceaccount.com'
         KSA_NAME = 'ksa'
         KSA_NAMESPACE = 'pro-dev'
-        DOCKER_DEFAULT_PLATFORM=linux/amd64
+        DOCKER_DEFAULT_PLATFORM='linux/amd64'
 //        DOCKER_BUILDKIT = '1'
 //        DOCKER_CLI_EXPERIMENTAL = 'enabled'
     }
