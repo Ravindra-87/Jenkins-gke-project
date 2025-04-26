@@ -19,7 +19,6 @@ pipeline {
         GSA_EMAIL = 'jenkins-gsa@jenkins-gke-project-457719.iam.gserviceaccount.com'
         KSA_NAME = 'ksa'
         KSA_NAMESPACE = 'pro-dev'
-        DOCKER_CLI_EXPERIMENTAL = 'enabled'
     }
 
     stages {
@@ -34,23 +33,6 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
-        stage('Install Docker Buildx') {
-            steps {
-                script {
-                    // Create the directory for Docker CLI plugins
-                    sh 'mkdir -vp ~/.docker/cli-plugins/'
-
-                    // Download Buildx binary
-                    sh 'curl --silent -L "https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64" > ~/.docker/cli-plugins/docker-buildx'
-
-                    // Make the binary executable
-                    sh 'chmod a+x ~/.docker/cli-plugins/docker-buildx'
-
-                    // Verify Buildx installation
-                    sh 'docker buildx version || echo "Docker Buildx installation failed"'
-                }
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
@@ -62,7 +44,6 @@ pipeline {
                         echo '{}' > $DOCKER_CONFIG/config.json
                         
                         #Build Docker image using Dockerfile in the repository    
-                        export DOCKER_CLI_EXPERIMENTAL=enabled                      
                         docker buildx build --platform linux/amd64,linux/arm64  -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                             
 
                     '''
