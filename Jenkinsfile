@@ -45,10 +45,10 @@ pipeline {
                         mkdir -p $DOCKER_CONFIG
                         echo '{}' > $DOCKER_CONFIG/config.json
                                           
-                        //Create and use a builder if not already
+                        #Create and use a builder if not already
                         sh 'docker buildx create --name jenkinsbuilder --use || echo "Builder already exists"  
                         
-                        //Build Docker image using Dockerfile in the repository             
+                        #Build Docker image using Dockerfile in the repository             
                         docker buildx build --platform linux/amd64  -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .
                     
                     '''
