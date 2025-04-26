@@ -35,11 +35,11 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
-        stage('Check Docker==>') {
+        stage('Set up Builder') {
             steps {
                 script {
-                    // Check if docker is available
-                    sh 'which docker'
+                    // Set the existing builder as the active one
+                    sh 'docker buildx use mybuilder'
                 }
             }
         }
