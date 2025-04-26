@@ -48,13 +48,6 @@ pipeline {
             }
         }
 
-        stage('Setup Kubernetes Credentials') {
-            steps {
-                script {
-                    sh 'gcloud container clusters get-credentials dev-cluster --zone us-central-1 --project jenkins-gke-project-457719'
-                }
-            }
-        }
         //  Deploy to GKE using kubectl
         stage('Deploy to GKE') {
             steps {
