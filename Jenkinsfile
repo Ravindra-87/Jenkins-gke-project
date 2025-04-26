@@ -31,6 +31,14 @@ pipeline {
                 sh 'docker buildx ls'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                // Create and use a builder if not already
+                sh 'docker buildx create --name jenkinsbuilder --use || echo "Builder already exists"'
+                // Build the image for amd64
+                sh 'docker buildx build --platform linux/amd64 -t test:latest .'
+            }
+        }
 
 //        stage('Clone Repository.........') {
 //            steps {
