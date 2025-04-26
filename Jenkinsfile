@@ -59,7 +59,9 @@ pipeline {
                                     
                         #kubectl apply -f ./kubernetes/deployment.yaml
                 
-                        sed -i "s/tag_version/${BUILD_NUMBER_KEY}/" ./kubernetes/deployment.yaml                
+                        sed -i "s/tag_version/${BUILD_NUMBER_KEY}/" ./kubernetes/deployment.yaml   
+                        
+                        kubectl apply -f ./kubernetes/deployment.yaml
                         kubectl apply -f ./kubernetes/service.yaml
                         kubectl apply -f ./kubernetes/secret.yaml
                     """
