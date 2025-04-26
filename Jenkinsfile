@@ -19,6 +19,8 @@ pipeline {
         GSA_EMAIL = 'jenkins-gsa@jenkins-gke-project-457719.iam.gserviceaccount.com'
         KSA_NAME = 'ksa'
         KSA_NAMESPACE = 'pro-dev'
+        DOCKER_BUILDKIT = '1'
+        DOCKER_CLI_EXPERIMENTAL = 'enabled'
     }
 
     stages {
@@ -43,7 +45,8 @@ pipeline {
                         mkdir -p $DOCKER_CONFIG
                         echo '{}' > $DOCKER_CONFIG/config.json
                         
-                        #Build Docker image using Dockerfile in the repository    
+                        #Build Docker image using Dockerfile in the repository 
+                        sh 'docker buildx create --use'   
                         docker buildx build --platform linux/amd64,linux/arm64  -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                             
 
                     '''
