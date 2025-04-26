@@ -21,6 +21,7 @@ pipeline {
         KSA_NAMESPACE = 'pro-dev'
         DOCKER_BUILDKIT = '1'
         DOCKER_CLI_EXPERIMENTAL = 'enabled'
+        BUILD_NUMBER_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
@@ -55,9 +56,10 @@ pipeline {
                     // Ensure kubectl is configured to use the correct GKE context
                     sh """
                         kubectl config set-context --current --namespace=$KSA_NAMESPACE
-                    
-                      # Apply all Kubernetes files in the project root directory
-                        kubectl apply -f ./kubernetes/deployment.yaml 
+                                    
+                        #kubectl apply -f ./kubernetes/deployment.yaml
+                
+                        sed -i "s/tag_version/${BUILD_NUMBER_KEY}/" ./kubernetes/deployment.yaml                
                         kubectl apply -f ./kubernetes/service.yaml
                         kubectl apply -f ./kubernetes/secret.yaml
                     """

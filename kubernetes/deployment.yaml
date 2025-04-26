@@ -18,7 +18,7 @@ spec:
       containers:
         # Spring Boot application container
         - name: jenkins-gke-project
-          image: asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:${BUILD_NUMBER}
+          image: asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:tag_version
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
