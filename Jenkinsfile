@@ -25,65 +25,72 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository.........') {
+        stage('Check Docker Buildx===>') {
             steps {
-                git branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Jenkins-gke-project.git'
+                sh 'docker buildx version'
+                sh 'docker buildx ls'
             }
         }
 
-        stage('Build with Maven.........') {
-            steps {
-                sh 'mvn clean install -DskipTests'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh '''
-                             
-                        export DOCKER_CONFIG=/tmp/docker-empty-config
-                        mkdir -p $DOCKER_CONFIG
-                        echo '{}' > $DOCKER_CONFIG/config.json
-                        
-                        #Build Docker image using Dockerfile in the repository                 
-                        docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                                           
-
-                    '''
-                }
-            }
-        }
-
-        stage('Push to Artifact Registry') {
-            steps {
-                script {
-                    // Log in to Artifact Registry (using the Google Cloud credentials)
-                    sh 'gcloud auth activate-service-account --key-file=$GOOGLE_CREDENTIALS'
-                    sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
-
-                    // Push the Docker image to Artifact Registry
-                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
-
-                }
-            }
-        }
-
-        // Stage 4: Deploy to GKE using kubectl
-        stage('Deploy to GKE') {
-            steps {
-                script {
-                    // Ensure kubectl is configured to use the correct GKE context
-                    sh """
-                        kubectl config set-context --current --namespace=$KSA_NAMESPACE
-                    
-                      # Apply all Kubernetes files in the project root directory
-                        kubectl apply -f ./kubernetes/deployment.yaml
-                        kubectl apply -f ./kubernetes/service.yaml
-                        kubectl apply -f ./kubernetes/secret.yaml
-                    """
-                }
-            }
-        }
+//        stage('Clone Repository.........') {
+//            steps {
+//                git branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Jenkins-gke-project.git'
+//            }
+//        }
+//
+//        stage('Build with Maven.........') {
+//            steps {
+//                sh 'mvn clean install -DskipTests'
+//            }
+//        }
+//
+//        stage('Build Docker Image') {
+//            steps {
+//                script {
+//                    sh '''
+//
+//                        export DOCKER_CONFIG=/tmp/docker-empty-config
+//                        mkdir -p $DOCKER_CONFIG
+//                        echo '{}' > $DOCKER_CONFIG/config.json
+//
+//                        #Build Docker image using Dockerfile in the repository
+//                        docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .
+//
+//                    '''
+//                }
+//            }
+//        }
+//
+//        stage('Push to Artifact Registry') {
+//            steps {
+//                script {
+//                    // Log in to Artifact Registry (using the Google Cloud credentials)
+//                    sh 'gcloud auth activate-service-account --key-file=$GOOGLE_CREDENTIALS'
+//                    sh 'gcloud auth configure-docker asia-east1-docker.pkg.dev --quiet'
+//
+//                    // Push the Docker image to Artifact Registry
+//                    sh 'docker push  asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest'
+//
+//                }
+//            }
+//        }
+//
+//        // Stage 4: Deploy to GKE using kubectl
+//        stage('Deploy to GKE') {
+//            steps {
+//                script {
+//                    // Ensure kubectl is configured to use the correct GKE context
+//                    sh """
+//                        kubectl config set-context --current --namespace=$KSA_NAMESPACE
+//
+//                      # Apply all Kubernetes files in the project root directory
+//                        kubectl apply -f ./kubernetes/deployment.yaml
+//                        kubectl apply -f ./kubernetes/service.yaml
+//                        kubectl apply -f ./kubernetes/secret.yaml
+//                    """
+//                }
+//            }
+//        }
     }
         post {
             always {
