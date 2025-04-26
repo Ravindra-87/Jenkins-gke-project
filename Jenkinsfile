@@ -41,7 +41,7 @@ pipeline {
                    // Create and use a builder if not already
                     sh 'docker buildx create --name jenkinsbuilders --use || echo "Builder already exists"'
                    // Build the image for amd64
-                    sh 'docker buildx build --platform linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .'
+                    sh 'docker buildx build --platform linux/arm64,linux/amd64 -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .'
             }
         }
 
