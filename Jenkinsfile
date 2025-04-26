@@ -24,33 +24,17 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository.........') {
+        stage('Clone Repository') {
             steps {
                 git branch: 'main', credentialsId: 'github-access-id', url: 'https://github.com/Ravindra-87/Jenkins-gke-project.git'
             }
         }
 
-        stage('Build with Maven.........') {
+        stage('Build with Maven') {
             steps {
                 sh 'mvn clean install -DskipTests'
             }
         }
-        stage('Set up Builder') {
-            steps {
-                script {
-                    // Set the existing builder as the active one
-                    sh 'docker buildx use mybuilder'
-                }
-            }
-        }
-//        stage('Build Docker Image') {
-//            steps {
-//                // Create and use a builder if not already
-//                sh 'docker buildx create --name jenkinsbuilder --use || echo "Builder already exists"'
-//                // Build the image for amd64
-//                sh 'docker buildx build --platform linux/amd64 -t test:latest .'
-//            }
-//        }
 
         stage('Build Docker Image') {
             steps {
@@ -60,11 +44,13 @@ pipeline {
                         export DOCKER_CONFIG=/tmp/docker-empty-config
                         mkdir -p $DOCKER_CONFIG
                         echo '{}' > $DOCKER_CONFIG/config.json
+                                          
+                        //Create and use a builder if not already
+                        sh 'docker buildx create --name jenkinsbuilder --use || echo "Builder already exists"  
                         
-                        #Build Docker image using Dockerfile in the repository  
-                        docker buildx use mybuilder               
-                        docker buildx build --platform linux/amd64  -tag asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .                                           
-
+                        //Build Docker image using Dockerfile in the repository             
+                        docker buildx build --platform linux/amd64  -t asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:latest .
+                    
                     '''
                 }
             }
