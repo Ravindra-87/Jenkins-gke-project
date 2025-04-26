@@ -21,7 +21,7 @@ pipeline {
         KSA_NAMESPACE = 'pro-dev'
         DOCKER_BUILDKIT = '1'
         DOCKER_CLI_EXPERIMENTAL = 'enabled'
-        BUILD_NUMBER_TAG = "${BUILD_NUMBER}"
+        BUILD_NUMBER_KEY = "${BUILD_NUMBER}"
     }
 
     stages {
