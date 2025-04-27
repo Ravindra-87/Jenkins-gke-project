@@ -4,12 +4,10 @@ metadata:
   name: jenkins-gke-project-service
   namespace: pro-dev
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: jenkins-gke-project
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
-      nodePort: 30221
-      name: grpc
