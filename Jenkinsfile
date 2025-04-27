@@ -55,7 +55,7 @@ pipeline {
                 script {
                     // Ensure kubectl is configured to use the correct GKE context
                     sh """
-                        // Authenticate and set the kubeconfig for kubectl
+                        # Authenticate and set the kubeconfig for kubectl
                         gcloud container clusters get-credentials $GOOGLE_CLUSTER_NAME --zone $GOOGLE_CLUSTER_ZONE --project $GOOGLE_PROJECT_ID
                         
                         kubectl config set-context --current --namespace=$KSA_NAMESPACE
