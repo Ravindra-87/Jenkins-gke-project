@@ -11,7 +11,7 @@ pipeline {
         GOOGLE_CREDENTIALS = credentials('gcp-service-account')   // Credential ID for the Google Service Account
         GITHUB_CREDENTIALS = credentials('github-access-id') // Credential ID for GitHub token
         GOOGLE_PROJECT_ID = 'jenkins-gke-project-457719'
-        GOOGLE_CLUSTER_NAME = 'dev-cluster1'
+        GOOGLE_CLUSTER_NAME = 'dev-cluster'
         GOOGLE_CLUSTER_ZONE = 'us-central1-a'
         IMAGE_NAME = 'jenkins-gke-project'
         IMAGE_TAG = 'latest'
@@ -55,8 +55,9 @@ pipeline {
                 script {
                     // Ensure kubectl is configured to use the correct GKE context
                     sh """
-                        # Authenticate and set the kubeconfig for kubectl
-                   
+                       # Authenticate and set the kubeconfig for kubectl
+                        gcloud container clusters get-credentials $GOOGLE_CLUSTER_NAME --zone $GOOGLE_CLUSTER_ZONE --project $GOOGLE_PROJECT_ID
+
                         kubectl config set-context --current --namespace=$KSA_NAMESPACE
                      
                         sed -i "" "s/tag_version/${BUILD_NUMBER_KEY}/" ./kubernetes/deployment.yaml   
