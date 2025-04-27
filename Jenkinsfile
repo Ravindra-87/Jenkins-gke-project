@@ -11,7 +11,7 @@ pipeline {
         GOOGLE_CREDENTIALS = credentials('gcp-service-account')   // Credential ID for the Google Service Account
         GITHUB_CREDENTIALS = credentials('github-access-id') // Credential ID for GitHub token
         GOOGLE_PROJECT_ID = 'jenkins-gke-project-457719'
-        GOOGLE_CLUSTER_NAME = 'dev-cluster'
+        GOOGLE_CLUSTER_NAME = 'dev-cluster1'
         GOOGLE_CLUSTER_ZONE = 'us-central1-a'
         IMAGE_NAME = 'jenkins-gke-project'
         IMAGE_TAG = 'latest'
