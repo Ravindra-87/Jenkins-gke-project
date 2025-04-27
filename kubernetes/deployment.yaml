@@ -38,13 +38,3 @@ spec:
                 secretKeyRef:
                  name: secret-db-password
                  key: secret-db-password-key
-        - name: cloud-sql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.33.0
-          command: [ "/cloud_sql_proxy",
-                     "-dir=/cloudsql",
-                     "-instances=jenkins-gke-project-457719:us-central1:jenkins-gke-project-1"
-                   ]
-          securityContext:
-           runAsNonRoot: true
-          ports:
-           - containerPort: 3306
