@@ -21,7 +21,7 @@ spec:
           image: asia-east1-docker.pkg.dev/jenkins-gke-project-457719/gc-artifact-repo/jenkins-gke-project:tag_version
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
           env:
             - name: DB_HOST
               value: "127.0.0.1"  # Cloud SQL Proxy will listen on localhost
